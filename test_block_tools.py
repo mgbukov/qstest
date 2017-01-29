@@ -1,5 +1,5 @@
 import sys,os
-qspin_path = os.path.join(os.getcwd(),"../QuSpin/")
+qspin_path = os.path.join(os.getcwd(),"../QuSpin_dev/")
 sys.path.insert(0,qspin_path)
 
 #from quspin.operators import hamiltonian, exp_op # Hamiltonians and operators
@@ -49,8 +49,6 @@ H_block=blk.block_ops(blocks,static,dynamic,basis_con,basis_args,dtype,save_prev
 psi0=np.eye(2**L)[0] 
 psi_t = H_block.evolve(psi0,0,10.0)
 psi_t2 = H_block.expm(psi0,H_time_eval=10.0)
-
-print np.linalg.norm(psi_t-psi_t2)
 
 P,H = blk.block_diag_hamiltonian(blocks,static,dynamic,basis_con,basis_args,dtype,check_symm=True,check_herm=True,check_pcon=True)
 

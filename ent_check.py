@@ -17,14 +17,14 @@ n_real=1 # number of disorder realisations
 n_jobs=1 # number of spawned processes used for parallelisation
 #
 ##### define model parameters #####
-L=10 # system size
+L=4 # system size
 Jcoup=1.0 # interaction
 h_MBL=10 # MBL disorder strength
 #
 ##### times #####
 texpmin=-2
 texpmax=+2
-steps=10
+steps=1
 time_steps=np.array([10**n for n in np.linspace(texpmin,texpmax,steps,endpoint=False)])
 #
 ##### set up Heisenberg Hamiltonian  #####
@@ -58,7 +58,7 @@ def realization(H_Heis,psi_0,basis,diag_op,times,real):
         """
         ti = time() # get start time
         #
-        seed() # the random number needs to be seeded for each parallel process
+        seed(0) # the random number needs to be seeded for each parallel process
         #
         # draw random field uniformly from [-1.0,1.0] for each lattice site
         unscaled_fields=-1+2*ranf((basis.L,))
@@ -84,7 +84,7 @@ def realization(H_Heis,psi_0,basis,diag_op,times,real):
                 imb.append(np.einsum('i,i,i',np.conj(psi_t),diag_op,psi_t))
                 Sent.append([[ent_entropy(psi_t,basis,chain_subsys=range(x,x+size))["Sent"] for x in range(L-size+1)] for size in sub_sizes])
                 
-                print(np.around(Sent,3))
+                print(np.around(Sent,6))
                 
 #       imb_at_t = lambda time: diag_op_exp(expO,psi_0,diag_op,time)
 #       imb = list(map(imb_at_t,times))
