@@ -16,6 +16,7 @@ def partial_trace(rho,sub_sys_A,L,sps=2):
 	if rho.shape[0] != rho.shape[1]:
 		raise ValueError("expecting square matrix")
 
+	# calculate subsystem B to be traced out and its length
 	sub_sys_A = set(sub_sys_A)
 	sub_sys_B = set(range(L))-sub_sys_A
 
@@ -30,8 +31,10 @@ def partial_trace(rho,sub_sys_A,L,sps=2):
 	T_tup += tuple(s+L for s in T_tup)
 
 	print("The following line need to be modified for symemtries")
-	rho_v = rho.reshape(tuple(sps for i in range(2*L))) # DM where index is given per site as rho_v[i_1,...,i_L,j_1,...j_L]
-	rho_v = rho_v.transpose(T_tup) # take transpose to reshuffle indices
+	# DM where index is given per site as rho_v[i_1,...,i_L,j_1,...j_L]
+	rho_v = rho.reshape(tuple(sps for i in range(2*L)))
+	# take transpose to reshuffle indices 
+	rho_v = rho_v.transpose(T_tup) 
 	rho_v = rho_v.reshape((Ns_B,Ns_A,Ns_B,Ns_A)) 
 
 	return np.einsum("ijik->jk",rho_v)
