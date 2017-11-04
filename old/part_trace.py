@@ -70,7 +70,7 @@ DM=ent_entropy(psi,basis,DM='chain_subsys',chain_subsys=chain_subsys)['DM_chain_
 DM_pt = partial_trace( np.outer(psi.conj(),psi),chain_subsys,L,basis.sps )
 
 
-np.testing.assert_allclose(DM-DM_pt,0.0,atol=1E-5,err_msg='Failed test partial trace!')
+np.testing.assert_allclose(DM-DM_pt,0.0,atol=1E-5,err_msg='Failed testing partial trace!')
 
 
 
